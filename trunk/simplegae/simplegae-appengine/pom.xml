@@ -16,7 +16,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<gaePluginVersion>0.8.4</gaePluginVersion>
+		<gaePluginVersion>0.9.0</gaePluginVersion>
 		<gaeHome>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gaeVersion}/appengine-java-sdk-${gaeVersion}</gaeHome>
 		<gae.application.version>0</gae.application.version>
 	</properties>

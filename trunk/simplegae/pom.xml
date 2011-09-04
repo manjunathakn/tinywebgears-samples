@@ -27,7 +27,7 @@
 		<servletApiVersion>2.5</servletApiVersion>
 		<javaxValidationVersion>1.0.0.GA</javaxValidationVersion>
 
-		<gaeVersion>1.4.3</gaeVersion>
+		<gaeVersion>1.5.2</gaeVersion>
 		<datanucleusCoreVersion>1.1.5</datanucleusCoreVersion>
 		<datanucleusJpaVersion>1.1.5</datanucleusJpaVersion>
 		<datanucleusRdbmsVersion>1.1.5</datanucleusRdbmsVersion>
