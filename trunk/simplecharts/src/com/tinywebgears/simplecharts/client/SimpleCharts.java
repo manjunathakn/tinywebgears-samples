@@ -38,7 +38,7 @@ public class SimpleCharts implements EntryPoint
             + "Please check your network connection and try again.";
 
     // Remote service proxy
-    private final AustralianEquitiesServiceAsync greetingService = GWT.create(AustralianEquitiesService.class);
+    private final AustralianEquitiesServiceAsync ausequitiesService = GWT.create(AustralianEquitiesService.class);
 
     // Fields
     final Button chartButton = new Button("Chart");
@@ -215,7 +215,7 @@ public class SimpleCharts implements EntryPoint
     private void paintChart(String stockCodeList)
     {
         String[] stockCodes = StringHelper.separateCodes(stockCodeList);
-        greetingService.getPriceInfo(stockCodes, new AsyncCallback<Map<Date, Map<String, Double>>>()
+        ausequitiesService.getPriceInfo(stockCodes, new AsyncCallback<Map<Date, Map<String, Double>>>()
         {
             public void onFailure(Throwable caught)
             {

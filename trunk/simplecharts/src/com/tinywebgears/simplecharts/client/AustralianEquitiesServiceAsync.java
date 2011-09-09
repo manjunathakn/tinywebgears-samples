@@ -6,7 +6,7 @@ import java.util.Map;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- * The async counterpart of <code>AusEquitiesService</code>.
+ * The async counterpart of <code>AustralianEquitiesService</code>.
  */
 public interface AustralianEquitiesServiceAsync
 {

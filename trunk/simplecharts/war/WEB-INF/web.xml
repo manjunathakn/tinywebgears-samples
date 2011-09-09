@@ -7,13 +7,13 @@
 
 	<!-- Servlets -->
 	<servlet>
-		<servlet-name>auseqServlet</servlet-name>
-		<servlet-class>com.tinywebgears.simplecharts.server.AusEquitiesServiceImpl</servlet-class>
+		<servlet-name>ausequitiesServlet</servlet-name>
+		<servlet-class>com.tinywebgears.simplecharts.server.AustralianEquitiesServiceImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>auseqServlet</servlet-name>
-		<url-pattern>/simplecharts/auseq</url-pattern>
+		<servlet-name>ausequitiesServlet</servlet-name>
+		<url-pattern>/simplecharts/ausequities</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->
