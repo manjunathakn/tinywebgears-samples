@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 /**
  * The client side stub for the RPC service.
  */
-@RemoteServiceRelativePath("auseq")
+@RemoteServiceRelativePath("ausequities")
 public interface AustralianEquitiesService extends RemoteService
 {
     Map<Date, Map<String, Double>> getPriceInfo(String... securityCodes) throws IllegalArgumentException;
