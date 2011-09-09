@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.tinywebgears.simplecharts.client.AusEquitiesService;
+import com.tinywebgears.simplecharts.client.AustralianEquitiesService;
 import com.tinywebgears.simplecharts.shared.FieldVerifier;
 import com.tinywebgears.simplecharts.shared.StringHelper;
 
@@ -23,7 +23,7 @@ import com.tinywebgears.simplecharts.shared.StringHelper;
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class AusEquitiesServiceImpl extends RemoteServiceServlet implements AusEquitiesService
+public class AustralianEquitiesServiceImpl extends RemoteServiceServlet implements AustralianEquitiesService
 {
     private final String DATE_FORMAT = "dd/MM/yyyy";
 

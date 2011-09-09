@@ -38,7 +38,7 @@ public class SimpleCharts implements EntryPoint
             + "Please check your network connection and try again.";
 
     // Remote service proxy
-    private final AusEquitiesServiceAsync greetingService = GWT.create(AusEquitiesService.class);
+    private final AustralianEquitiesServiceAsync greetingService = GWT.create(AustralianEquitiesService.class);
 
     // Fields
     final Button chartButton = new Button("Chart");
