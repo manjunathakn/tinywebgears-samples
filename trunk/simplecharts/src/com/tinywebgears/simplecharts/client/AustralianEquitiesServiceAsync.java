@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 /**
  * The async counterpart of <code>AusEquitiesService</code>.
  */
-public interface AusEquitiesServiceAsync
+public interface AustralianEquitiesServiceAsync
 {
     void getPriceInfo(String[] securityCodes, AsyncCallback<Map<Date, Map<String, Double>>> callback)
             throws IllegalArgumentException;
