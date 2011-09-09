@@ -1,4 +1,4 @@
-export GAE_VERSION=1.4.3
+export GAE_VERSION=1.5.2
 
 echo "Going to install AppEngine dependencies."
 
