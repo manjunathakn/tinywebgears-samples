@@ -13,15 +13,17 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.tinywebgears.gaedownload.core.dao.FileRepository;
 import com.tinywebgears.gaedownload.core.dao.UserRepository;
+import com.tinywebgears.gaedownload.core.model.User;
 import com.tinywebgears.gaedownload.core.service.DefaultUserServices;
 import com.tinywebgears.gaedownload.core.service.UserServicesIF;
-import com.tinywebgears.gaedownload.core.model.User;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
@@ -44,6 +46,7 @@ public class WebApplication extends Application implements ApplicationContext.Tr
     private HorizontalLayout logoutForm;
     private VerticalLayout userInfoLayout;
     private Label emailLabel;
+    private Button downloadButton;
 
     public WebApplication()
     {
@@ -223,6 +226,16 @@ public class WebApplication extends Application implements ApplicationContext.Tr
         logoutForm.addComponent(emailLabel);
         logoutForm.addComponent(new Link("Logout", logoutUrl));
 
+        downloadButton = new Button("Button");
+        downloadButton.addListener(new Button.ClickListener()
+        {
+            @Override
+            public void buttonClick(ClickEvent event)
+            {
+                downloadFile();
+            }
+        });
+
         userInfoLayout = new VerticalLayout();
         mainLayout.addComponent(userInfoLayout);
         initialized = true;
@@ -250,8 +263,19 @@ public class WebApplication extends Application implements ApplicationContext.Tr
                 lastLoginLabel.setValue("This is the first time you log in.");
             lastLoginLabel.setWidth(100, Sizeable.UNITS_PERCENTAGE);
             userInfoLayout.addComponent(lastLoginLabel);
+            userInfoLayout.addComponent(downloadButton);
             userServices.updateUserLoginDate(user.getKey(), new Date());
         }
+    }
+
+    private void downloadFile()
+    {
+        String fileName = "sample.txt";
+        String fileContents = "Sample Contents";
+        userServices.removeAllFiles();
+        Resource resource = userServices.serveTextFile(fileName, fileContents.getBytes());
+        // Redirecting to servlet in order to download the file
+        mainWindow.open(resource, "_blank");
     }
 
     private static class DatabaseServices implements Serializable

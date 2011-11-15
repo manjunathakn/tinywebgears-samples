@@ -15,5 +15,7 @@ public interface UserServicesIF extends ServiceIF
 
     User updateUserLoginDate(Key userKey, Date lastLoginDate) throws DataPersistenceException;
 
+    void removeAllFiles();
+
     Resource serveTextFile(String filename, byte[] text) throws ServiceException;
 }

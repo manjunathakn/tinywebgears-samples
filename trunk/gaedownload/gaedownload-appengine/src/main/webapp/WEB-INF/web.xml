@@ -13,7 +13,7 @@
 		<servlet-class>com.vaadin.terminal.gwt.server.GAEApplicationServlet</servlet-class>
 		<init-param>
 			<param-name>application</param-name>
-			<param-value>com.tinywebgears.samples.gaedownload.webapp.WebApplication</param-value>
+			<param-value>com.tinywebgears.gaedownload.webapp.WebApplication</param-value>
 		</init-param>
 	</servlet>
 
@@ -32,7 +32,7 @@
 
 	<servlet>
 		<servlet-name>FileServerServlet</servlet-name>
-		<servlet-class>com.tinywebgears.samples.gaedownload.servlet.TextFileServlet</servlet-class>
+		<servlet-class>com.tinywebgears.gaedownload.servlet.TextFileServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FileServerServlet</servlet-name>
