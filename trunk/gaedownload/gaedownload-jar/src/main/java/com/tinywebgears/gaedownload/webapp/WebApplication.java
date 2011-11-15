@@ -47,6 +47,7 @@ public class WebApplication extends Application implements ApplicationContext.Tr
     private VerticalLayout userInfoLayout;
     private Label emailLabel;
     private Button downloadButton;
+    private HorizontalLayout downloadLayout;
 
     public WebApplication()
     {
@@ -226,7 +227,7 @@ public class WebApplication extends Application implements ApplicationContext.Tr
         logoutForm.addComponent(emailLabel);
         logoutForm.addComponent(new Link("Logout", logoutUrl));
 
-        downloadButton = new Button("Button");
+        downloadButton = new Button("Download");
         downloadButton.addListener(new Button.ClickListener()
         {
             @Override
@@ -235,6 +236,11 @@ public class WebApplication extends Application implements ApplicationContext.Tr
                 downloadFile();
             }
         });
+        downloadLayout = new HorizontalLayout();
+        downloadLayout.setMargin(true, false, true, false);
+        downloadLayout.setSpacing(true);
+        downloadLayout.addComponent(new Label("Press this button to download a sample file."));
+        downloadLayout.addComponent(downloadButton);
 
         userInfoLayout = new VerticalLayout();
         mainLayout.addComponent(userInfoLayout);
@@ -263,7 +269,7 @@ public class WebApplication extends Application implements ApplicationContext.Tr
                 lastLoginLabel.setValue("This is the first time you log in.");
             lastLoginLabel.setWidth(100, Sizeable.UNITS_PERCENTAGE);
             userInfoLayout.addComponent(lastLoginLabel);
-            userInfoLayout.addComponent(downloadButton);
+            userInfoLayout.addComponent(downloadLayout);
             userServices.updateUserLoginDate(user.getKey(), new Date());
         }
     }
