@@ -12,7 +12,7 @@ import com.tinywebgears.gaedownload.core.dao.FileRepository;
 import com.tinywebgears.gaedownload.core.dao.UserRepository;
 import com.tinywebgears.gaedownload.core.model.MyFile;
 import com.tinywebgears.gaedownload.core.model.User;
-import com.tinywebgears.gaedownload.core.servlet.TextFileServlet;
+import com.tinywebgears.gaedownload.servlet.TextFileServlet;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Resource;
 
@@ -75,6 +75,12 @@ public class DefaultUserServices extends AbstractService implements UserServices
     {
         file.setOwnerKey(getUserKey());
         fileRepo.persist(file);
+    }
+
+    @Override
+    public void removeAllFiles()
+    {
+        // TODO: Implement
     }
 
     @Override

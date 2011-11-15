@@ -1,4 +1,4 @@
-package com.tinywebgears.gaedownload.core.servlet;
+package com.tinywebgears.gaedownload.servlet;
 
 import java.io.IOException;
 import java.security.Principal;
