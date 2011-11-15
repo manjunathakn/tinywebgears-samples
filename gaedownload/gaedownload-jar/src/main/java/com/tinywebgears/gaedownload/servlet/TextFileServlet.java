@@ -17,7 +17,7 @@ import com.tinywebgears.gaedownload.core.model.MyFile;
 public class TextFileServlet extends HttpServlet
 {
     public static final String PARAM_BLOB_ID = "id";
-    public static final String SERVLET_PATH = "/tuatara/servefile";
+    public static final String SERVLET_PATH = "/gaedownload/servefile";
 
     private final Logger logger = LoggerFactory.getLogger(TextFileServlet.class);
 
