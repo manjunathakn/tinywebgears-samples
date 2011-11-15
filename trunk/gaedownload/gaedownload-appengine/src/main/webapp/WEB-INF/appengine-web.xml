@@ -3,7 +3,7 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 
 	<!-- Edit this section and provide details of your AppEngine application. -->
-	<application>gaedownloadvaadin</application>
+	<application>gaedownloaddemo</application>
 	<version>1</version>
 
 	<!-- Configure java.util.logging -->
