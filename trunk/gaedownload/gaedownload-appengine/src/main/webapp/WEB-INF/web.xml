@@ -36,7 +36,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FileServerServlet</servlet-name>
-		<url-pattern>/tuatara/servefile</url-pattern>
+		<url-pattern>/gaedownload/servefile</url-pattern>
 	</servlet-mapping>
 
 </web-app>
