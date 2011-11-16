@@ -1,22 +1,22 @@
 package com.tinywebgears.samples.simplejavatest;
 
-class Pair<A>
+class Pair<F, S>
 {
-    private final A fist;
-    private final A second;
+    private final F fist;
+    private final S second;
 
-    public Pair(A first, A second)
+    public Pair(F first, S second)
     {
         this.fist = first;
         this.second = second;
     }
 
-    public A getFist()
+    public F getFist()
     {
         return fist;
     }
 
-    public A getSecond()
+    public S getSecond()
     {
         return second;
     }

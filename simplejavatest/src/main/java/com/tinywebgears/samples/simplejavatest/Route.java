@@ -1,50 +1,43 @@
 package com.tinywebgears.samples.simplejavatest;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 class Route
 {
-    private final String sourceStop;
-    private final String destinationStop;
-    private final Integer distance;
-    private final Pair<Route> subRoutes;
+    private Integer totalDistance;
+    private List<StationNode> stations;
 
-    Route(String sourceStop, String destinationStop, Integer distance)
+    Route(StationNode sourceStation)
     {
-        this(sourceStop, destinationStop, distance, null, null);
+        stations = new ArrayList<StationNode>();
+        stations.add(sourceStation);
+        totalDistance = 0;
     }
 
-    Route(String sourceStop, String destinationStop, Integer distance, Route firstPart, Route secondPart)
+    void addStation(StationNode nextStation, Integer distance)
     {
-        assert distance != null || (firstPart != null && secondPart != null);
-        assert distance > 0 || distance == null;
-        if (firstPart != null && secondPart != null)
-        {
-            this.subRoutes = new Pair<Route>(firstPart, secondPart);
-            this.distance = firstPart.getDistance() + secondPart.getDistance();
-        }
-        else
-        {
-            this.subRoutes = null;
-            this.distance = distance;
-        }
-        this.sourceStop = sourceStop;
-        this.destinationStop = destinationStop;
+        stations.add(nextStation);
+        totalDistance += distance;
     }
 
-    public Integer getDistance()
+    Queue<String> getPath()
     {
-        return distance;
-    }
-
-    public Pair<Route> getSubRoutes()
-    {
-        return subRoutes;
+        Queue<String> path = new LinkedList<String>();
+        for (StationNode station : stations)
+            path.offer(station.getName());
+        return path;
     }
 
     @Override
     public String toString()
     {
-        if (subRoutes == null)
-            return "[" + sourceStop + "-" + destinationStop + ":" + distance + "]";
-        return "[[" + subRoutes.getFist() + "][" + subRoutes.getSecond() + "]:" + distance + "]";
+        StringBuilder path = new StringBuilder();
+        for (StationNode station : stations)
+            path.append(station.getName()).append("-");
+        path.append(totalDistance);
+        return path.toString();
     }
 }
