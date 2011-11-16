@@ -5,10 +5,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.tinywebgears</groupId>
-	<artifactId>simplejavatest</artifactId>
+	<groupId>com.tinywebgears.experiments</groupId>
+	<artifactId>railnetwork</artifactId>
 	<version>1.0.0</version>
-	<name>Simple Java Test</name>
+	<name>Rail Network</name>
 	<packaging>jar</packaging>
 
 	<properties>
