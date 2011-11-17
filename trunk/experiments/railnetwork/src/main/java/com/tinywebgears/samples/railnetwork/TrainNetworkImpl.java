@@ -1,8 +1,11 @@
 package com.tinywebgears.samples.railnetwork;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +31,6 @@ public class TrainNetworkImpl implements TrainNetwork
         stationNode = new StationNode(station);
         stationNodes.put(station, stationNode);
         return stationNode;
-    }
-
-    @Override
-    public StationNode getStation(String station)
-    {
-        return getOrCreateStation(station, false);
     }
 
     @Override
@@ -70,5 +67,28 @@ public class TrainNetworkImpl implements TrainNetwork
             throw new NoRouteException("No route from " + stationNode + " to " + destination);
         }
         return checkDistance(next.getFist(), stationsQueue) + next.getSecond();
+    }
+
+    @Override
+    public Set<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops)
+    {
+        StationNode sourceNode = stationNodes.get(source);
+        Queue<Pair<StationNode, Route>> nodesToProcess = new LinkedList<Pair<StationNode, Route>>();
+        Route routeSoFar = new Route(sourceNode.getName());
+        nodesToProcess.offer(new Pair<StationNode, Route>(sourceNode, routeSoFar));
+        Set<Route> routesFound = new HashSet<Route>();
+        checkRoutes(routesFound, nodesToProcess, destination, minStops, maxStops);
+        return routesFound;
+    }
+
+    private void checkRoutes(Set<Route> routesFound, Queue<Pair<StationNode, Route>> nodesToProcess,
+            String destination, Integer minStops, Integer maxStops)
+    {
+        if (nodesToProcess.isEmpty())
+            return;
+        Pair<StationNode, Route> node = nodesToProcess.poll();
+        StationNode stationNode = node.getFist();
+        Route route = node.getSecond();
+        logger.debug("Station to check now: " + stationNode + " Route to the station: " + route);
     }
 }

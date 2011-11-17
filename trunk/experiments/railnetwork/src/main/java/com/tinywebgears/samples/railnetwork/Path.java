@@ -3,22 +3,38 @@ package com.tinywebgears.samples.railnetwork;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/*
+ * Immutable object representing a path amongst stations.
+ */
 class Path
 {
-    private Queue<String> stations = new LinkedList<String>();
+    private final Queue<String> stations;
+
+    Path()
+    {
+        stations = new LinkedList<String>();
+    }
+
+    private Path(Queue<String> stations)
+    {
+        this.stations = stations;
+    }
 
     public static Path parseString(String pathString)
     {
         Path path = new Path();
         String[] stations = pathString.split("-");
         for (String station : stations)
-            path.addStation(station);
+            path = path.addStation(station);
         return path;
     }
 
-    void addStation(String station)
+    Path addStation(String station)
     {
-        stations.offer(station);
+        Queue<String> newStations = new LinkedList<String>();
+        newStations.addAll(stations);
+        newStations.offer(station);
+        return new Path(newStations);
     }
 
     public Queue<String> getStations()
@@ -27,6 +43,8 @@ class Path
         copy.addAll(stations);
         return copy;
     }
+
+    // TODO: equals() and hashCode()
 
     @Override
     public String toString()

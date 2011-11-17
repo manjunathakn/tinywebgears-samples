@@ -1,6 +1,6 @@
 package com.tinywebgears.samples.railnetwork;
 
-import java.util.List;
+import java.util.Set;
 
 public interface NetworkPlanner
 {
@@ -10,5 +10,5 @@ public interface NetworkPlanner
 
     Integer checkPath(String pathString) throws NoRouteException;
 
-    List<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops);
+    Set<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops);
 }

@@ -1,7 +1,6 @@
 package com.tinywebgears.samples.railnetwork;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +15,12 @@ public class NetworkPlannerImpl implements NetworkPlanner
     public NetworkPlannerImpl(String inputGraph)
     {
         network = new TrainNetworkImpl();
-        initializeGraph(inputGraph);
+        initializeNetwork(inputGraph);
         logger.info("TrainPlanner initialized.");
         initialized = true;
     }
 
-    private void initializeGraph(String inputGraph)
+    private void initializeNetwork(String inputGraph)
     {
         String[] routes = inputGraph.split(", *");
         for (String route : routes)
@@ -53,6 +52,7 @@ public class NetworkPlannerImpl implements NetworkPlanner
     @Override
     public Integer checkPath(Path path) throws NoRouteException
     {
+        logger.debug("checkPath : " + path);
         return network.checkPath(path);
     }
 
@@ -63,8 +63,8 @@ public class NetworkPlannerImpl implements NetworkPlanner
     }
 
     @Override
-    public List<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops)
+    public Set<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops)
     {
-        return new ArrayList<Route>();
+        return network.getAllRoutes(source, destination, minStops, maxStops);
     }
 }

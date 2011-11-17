@@ -1,41 +1,50 @@
 package com.tinywebgears.samples.railnetwork;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/*
+ * Immutable object representing a train route, containing the path and total distance.
+ */
 class Route
 {
-    private Integer totalDistance;
-    private List<StationNode> stationNodes;
+    private final Integer length;
+    private final Integer totalDistance;
+    private final Path path;
 
-    Route(StationNode sourceNode)
+    Route(String startingStation)
     {
-        stationNodes = new ArrayList<StationNode>();
-        stationNodes.add(sourceNode);
+        assert startingStation != null;
+        path = new Path().addStation(startingStation);
         totalDistance = 0;
+        length = 0;
     }
 
-    void addStationNode(StationNode nextNode, Integer distance)
+    private Route(Path path, Integer length, Integer totalDistance)
     {
-        stationNodes.add(nextNode);
-        totalDistance += distance;
+        this.path = path;
+        this.length = length;
+        this.totalDistance = totalDistance;
+    }
+
+    Route addStation(String station, Integer distance)
+    {
+        Path newPath = path.addStation(station);
+        return new Route(newPath, length + 1, totalDistance + distance);
     }
 
     Path getPath()
     {
-        Path path = new Path();
-        for (StationNode stationNode : stationNodes)
-            path.addStation(stationNode.getName());
         return path;
     }
+
+    Integer getLength()
+    {
+        return length;
+    }
+
+    // TODO: equals() and hashCode()
 
     @Override
     public String toString()
     {
-        StringBuilder path = new StringBuilder();
-        for (StationNode stationNode : stationNodes)
-            path.append(stationNode.getName()).append("-");
-        path.append(totalDistance);
-        return path.toString();
+        return path.toString() + ":" + length + ":" + totalDistance;
     }
 }

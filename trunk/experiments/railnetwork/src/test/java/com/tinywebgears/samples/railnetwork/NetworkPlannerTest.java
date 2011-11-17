@@ -2,7 +2,6 @@ package com.tinywebgears.samples.railnetwork;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import junit.framework.Assert;
@@ -74,10 +73,10 @@ public class NetworkPlannerTest
     @Test
     public void testGetRoutes1() throws NoRouteException
     {
-        List<Route> allRoutes = planner.getAllRoutes("C", "C", 1, 3);
+        Set<Route> allRoutes = planner.getAllRoutes("C", "C", 1, 3);
         Assert.assertEquals(Integer.valueOf(2), Integer.valueOf(allRoutes.size()));
         Set<String> expectedRoutes = new HashSet<String>(Arrays.asList("C-D-C", "C-E-B-C"));
-        Assert.assertTrue(expectedRoutes.contains(allRoutes.get(0).getPath().toString()));
-        Assert.assertTrue(expectedRoutes.contains(allRoutes.get(1).getPath().toString()));
+        for (Route route : allRoutes)
+            Assert.assertTrue(expectedRoutes.contains(route.getPath().toString()));
     }
 }
