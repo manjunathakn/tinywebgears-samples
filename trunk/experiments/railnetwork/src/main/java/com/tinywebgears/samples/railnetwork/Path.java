@@ -70,7 +70,22 @@ class Path
         return false;
     }
 
-    // TODO: equals() and hashCode()
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if ((o == null) || (o.getClass() != this.getClass()))
+            return false;
+        Path p = (Path) o;
+        return toString().equals(p.toString());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return toString().hashCode();
+    }
 
     @Override
     public String toString()

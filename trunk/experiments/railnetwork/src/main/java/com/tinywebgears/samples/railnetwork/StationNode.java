@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class StationNode
 {
-    private String name;
-    private Map<String, Pair<StationNode, Integer>> nextStations;
+    private final String name;
+    private final Map<String, Pair<StationNode, Integer>> nextStations;
 
     StationNode(String name)
     {
@@ -38,9 +38,9 @@ public class StationNode
     @Override
     public boolean equals(Object o)
     {
-        if (o == null)
-            return false;
-        if (!(o instanceof StationNode))
+        if (this == o)
+            return true;
+        if ((o == null) || (o.getClass() != this.getClass()))
             return false;
         StationNode s = (StationNode) o;
         return name.equals(s.name);
@@ -49,8 +49,7 @@ public class StationNode
     @Override
     public int hashCode()
     {
-        // TODO: Improve hash
-        return 0;
+        return name.hashCode();
     }
 
     @Override

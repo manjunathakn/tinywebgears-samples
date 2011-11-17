@@ -60,7 +60,26 @@ class Route
         return path.passesThisStation(station);
     }
 
-    // TODO: equals() and hashCode()
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if ((o == null) || (o.getClass() != this.getClass()))
+            return false;
+        Route r = (Route) o;
+        return path.equals(r.path) && numberOfStops.equals(r.numberOfStops) && totalDistance.equals(r.totalDistance);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 31 * hash + path.hashCode();
+        hash = 31 * hash + numberOfStops;
+        hash = 31 * hash + totalDistance;
+        return hash;
+    }
 
     @Override
     public String toString()
