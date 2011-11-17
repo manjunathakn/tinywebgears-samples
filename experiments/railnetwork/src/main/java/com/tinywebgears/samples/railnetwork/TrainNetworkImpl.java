@@ -62,7 +62,10 @@ public class TrainNetworkImpl implements TrainNetwork
             return 0;
         Pair<StationNode, Integer> next = station.checkRoute(destinationStationName);
         if (next == null)
+        {
+            logger.info("NO SUCH ROUTE");
             throw new NoRouteException("No route from " + station + " to " + destinationStationName);
+        }
         return checkDistance(next.getFist(), path) + next.getSecond();
     }
 }

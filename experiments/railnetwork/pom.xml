@@ -6,9 +6,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.tinywebgears.experiments</groupId>
-	<artifactId>simpleaspects</artifactId>
+	<artifactId>railsnetwork</artifactId>
 	<version>1.0.0</version>
-	<name>Simple Aspects</name>
+	<name>Rails Network</name>
 	<packaging>jar</packaging>
 
 	<properties>
