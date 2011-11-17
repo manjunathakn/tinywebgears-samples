@@ -6,28 +6,33 @@ import java.util.Map;
 public class StationNode
 {
     private String name;
-    private Map<String, Pair<StationNode, Integer>> routes;
+    private Map<String, Pair<StationNode, Integer>> nextStations;
 
     StationNode(String name)
     {
         assert name != null;
         this.name = name;
-        this.routes = new HashMap<String, Pair<StationNode, Integer>>();
+        this.nextStations = new HashMap<String, Pair<StationNode, Integer>>();
     }
 
     void addRoute(StationNode destinationNode, Integer distance)
     {
-        routes.put(destinationNode.getName(), new Pair<StationNode, Integer>(destinationNode, distance));
-    }
-
-    Pair<StationNode, Integer> checkRoute(String station)
-    {
-        return routes.get(station);
+        nextStations.put(destinationNode.getName(), new Pair<StationNode, Integer>(destinationNode, distance));
     }
 
     String getName()
     {
         return name;
+    }
+
+    Pair<StationNode, Integer> checkNextStation(String station)
+    {
+        return nextStations.get(station);
+    }
+
+    Map<String, Pair<StationNode, Integer>> getAllNextStations()
+    {
+        return nextStations;
     }
 
     @Override

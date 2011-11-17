@@ -31,52 +31,106 @@ public class NetworkPlannerTest
     }
 
     @Test
-    public void testFollowRoute1() throws NoRouteException
+    public void testFollowRoute_No1() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A-B-C");
-        logger.info("A-B-C : " + distance);
-        Assert.assertEquals(Integer.valueOf(9), distance);
+        Route route = planner.checkPath("A-B-C");
+        Assert.assertNotNull(route);
+        Assert.assertEquals(Integer.valueOf(9), route.getTotalDistance());
+        logger.info("Test 1 - " + route);
     }
 
     @Test
-    public void testFollowRoute2() throws NoRouteException
+    public void testFollowRoute_No2() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A-D");
-        logger.info("A-D : " + distance);
-        Assert.assertEquals(Integer.valueOf(5), distance);
+        Route route = planner.checkPath("A-D");
+        Assert.assertNotNull(route);
+        Assert.assertEquals(Integer.valueOf(5), route.getTotalDistance());
+        logger.info("Test 2 - " + route);
     }
 
     @Test
-    public void testFollowRoute3() throws NoRouteException
+    public void testFollowRoute_No3() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A-D-C");
-        logger.info("A-D-C : " + distance);
-        Assert.assertEquals(Integer.valueOf(13), distance);
+        Route route = planner.checkPath("A-D-C");
+        Assert.assertNotNull(route);
+        Assert.assertEquals(Integer.valueOf(13), route.getTotalDistance());
+        logger.info("Test 3 - " + route);
     }
 
     @Test
-    public void testFollowRoute4() throws NoRouteException
+    public void testFollowRoute_No4() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A-E-B-C-D");
-        logger.info("A-E-B-C-D : " + distance);
-        Assert.assertEquals(Integer.valueOf(22), distance);
+        Route route = planner.checkPath("A-E-B-C-D");
+        Assert.assertNotNull(route);
+        Assert.assertEquals(Integer.valueOf(22), route.getTotalDistance());
+        logger.info("Test 4 - " + route);
     }
 
     @Test(expected = NoRouteException.class)
-    public void testFollowRoute5() throws NoRouteException
+    public void testFollowRoute_No5() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A-E-D");
-        logger.info("A-E-D : " + distance);
+        try
+        {
+            planner.checkPath("A-E-D");
+        }
+        catch (NoRouteException e)
+        {
+            logger.info("Test 5 - NO SUCH ROUTE");
+            throw e;
+        }
         Assert.assertTrue(false);
     }
 
     @Test
-    public void testGetRoutes1() throws NoRouteException
+    public void testGetRoutesLimitedStops_No6() throws NoRouteException
     {
         Set<Route> allRoutes = planner.getAllRoutes("C", "C", 1, 3);
         Assert.assertEquals(Integer.valueOf(2), Integer.valueOf(allRoutes.size()));
         Set<String> expectedRoutes = new HashSet<String>(Arrays.asList("C-D-C", "C-E-B-C"));
+        logger.info("Test 6 - Routes Found: " + allRoutes.size());
         for (Route route : allRoutes)
+        {
             Assert.assertTrue(expectedRoutes.contains(route.getPath().toString()));
+            logger.debug("Test 6 - Route Found: " + route);
+        }
+    }
+
+    @Test
+    public void testGetRoutesLimitedStops_No7() throws NoRouteException
+    {
+        Set<Route> allRoutes = planner.getAllRoutes("A", "C", 4, 4);
+        Assert.assertEquals(Integer.valueOf(3), Integer.valueOf(allRoutes.size()));
+        Set<String> expectedRoutes = new HashSet<String>(Arrays.asList("A-B-C-D-C", "A-D-C-D-C", "A-D-E-B-C"));
+        logger.info("Test 7 - Routes Found: " + allRoutes.size());
+        for (Route route : allRoutes)
+        {
+            Assert.assertTrue(expectedRoutes.contains(route.getPath().toString()));
+            logger.debug("Test 7 - Route Found: " + route);
+        }
+    }
+
+    @Test
+    public void testGetShortestRoute_No8() throws NoRouteException
+    {
+        Route route = planner.getShortestRoute("A", "C");
+        Assert.assertEquals(Integer.valueOf(9), route.getTotalDistance());
+        logger.info("Test 8 - Shortest Route's Length: " + route.getTotalDistance());
+    }
+
+    @Test
+    public void testGetShortestRoute_No9() throws NoRouteException
+    {
+        Route route = planner.getShortestRoute("B", "B");
+        Assert.assertEquals(Integer.valueOf(9), route.getTotalDistance());
+        logger.info("Test 9 - Shortest Route's Length: " + route.getTotalDistance());
+    }
+
+    @Test
+    public void testGetRoutesMaxDistance_No9() throws NoRouteException
+    {
+        Set<Route> allRoutes = planner.getAllRoutes("C", "C", 30);
+        logger.info("Test 10 - Routes Found: " + allRoutes.size());
+        for (Route route : allRoutes)
+            logger.debug("Test 10 - Route Found: " + route);
     }
 }

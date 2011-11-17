@@ -16,7 +16,7 @@ public class NetworkPlannerImpl implements NetworkPlanner
     {
         network = new TrainNetworkImpl();
         initializeNetwork(inputGraph);
-        logger.info("TrainPlanner initialized.");
+        logger.debug("TrainPlanner initialized.");
         initialized = true;
     }
 
@@ -50,14 +50,14 @@ public class NetworkPlannerImpl implements NetworkPlanner
     }
 
     @Override
-    public Integer checkPath(Path path) throws NoRouteException
+    public Route checkPath(Path path) throws NoRouteException
     {
         logger.debug("checkPath : " + path);
         return network.checkPath(path);
     }
 
     @Override
-    public Integer checkPath(String pathString) throws NoRouteException
+    public Route checkPath(String pathString) throws NoRouteException
     {
         return checkPath(Path.parseString(pathString));
     }
@@ -66,5 +66,17 @@ public class NetworkPlannerImpl implements NetworkPlanner
     public Set<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops)
     {
         return network.getAllRoutes(source, destination, minStops, maxStops);
+    }
+
+    @Override
+    public Set<Route> getAllRoutes(String source, String destination, Integer maxDistance)
+    {
+        return network.getAllRoutes(source, destination, maxDistance);
+    }
+
+    @Override
+    public Route getShortestRoute(String source, String destination)
+    {
+        return network.getShortestRoute(source, destination);
     }
 }
