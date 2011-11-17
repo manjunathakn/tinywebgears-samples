@@ -1,5 +1,10 @@
 package com.tinywebgears.samples.railnetwork;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import junit.framework.Assert;
 
 import org.junit.BeforeClass;
@@ -29,40 +34,50 @@ public class NetworkPlannerTest
     @Test
     public void testFollowRoute1() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A", "B", "C");
-        logger.info("Route A-B-C : " + distance);
+        Integer distance = planner.checkPath("A-B-C");
+        logger.info("A-B-C : " + distance);
         Assert.assertEquals(Integer.valueOf(9), distance);
     }
 
     @Test
     public void testFollowRoute2() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A", "D");
-        logger.info("Route A-D : " + distance);
+        Integer distance = planner.checkPath("A-D");
+        logger.info("A-D : " + distance);
         Assert.assertEquals(Integer.valueOf(5), distance);
     }
 
     @Test
     public void testFollowRoute3() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A", "D", "C");
-        logger.info("Route A-D-C : " + distance);
+        Integer distance = planner.checkPath("A-D-C");
+        logger.info("A-D-C : " + distance);
         Assert.assertEquals(Integer.valueOf(13), distance);
     }
 
     @Test
     public void testFollowRoute4() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A", "E", "B", "C", "D");
-        logger.info("Route A-E-B-C-D : " + distance);
+        Integer distance = planner.checkPath("A-E-B-C-D");
+        logger.info("A-E-B-C-D : " + distance);
         Assert.assertEquals(Integer.valueOf(22), distance);
     }
 
     @Test(expected = NoRouteException.class)
     public void testFollowRoute5() throws NoRouteException
     {
-        Integer distance = planner.checkPath("A", "E", "D");
-        logger.info("Route A-E-D : " + distance);
+        Integer distance = planner.checkPath("A-E-D");
+        logger.info("A-E-D : " + distance);
         Assert.assertTrue(false);
+    }
+
+    @Test
+    public void testGetRoutes1() throws NoRouteException
+    {
+        List<Route> allRoutes = planner.getAllRoutes("C", "C", 1, 3);
+        Assert.assertEquals(Integer.valueOf(2), Integer.valueOf(allRoutes.size()));
+        Set<String> expectedRoutes = new HashSet<String>(Arrays.asList("C-D-C", "C-E-B-C"));
+        Assert.assertTrue(expectedRoutes.contains(allRoutes.get(0).getPath().toString()));
+        Assert.assertTrue(expectedRoutes.contains(allRoutes.get(1).getPath().toString()));
     }
 }

@@ -1,14 +1,14 @@
 package com.tinywebgears.samples.railnetwork;
 
-import java.util.Queue;
+import java.util.List;
 
 public interface NetworkPlanner
 {
     boolean isInitialized();
 
-    StationNode getStation(String stationName);
+    Integer checkPath(Path path) throws NoRouteException;
 
-    Integer checkPath(Queue<String> path) throws NoRouteException;
+    Integer checkPath(String pathString) throws NoRouteException;
 
-    Integer checkPath(String... path) throws NoRouteException;
+    List<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops);
 }

@@ -1,8 +1,7 @@
 package com.tinywebgears.samples.railnetwork;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ public class NetworkPlannerImpl implements NetworkPlanner
 
     private void initializeGraph(String inputGraph)
     {
-        String[] routes = inputGraph.split(",[ ]*");
+        String[] routes = inputGraph.split(", *");
         for (String route : routes)
         {
             try
@@ -52,20 +51,20 @@ public class NetworkPlannerImpl implements NetworkPlanner
     }
 
     @Override
-    public StationNode getStation(String stationName)
-    {
-        return network.getStation(stationName);
-    }
-
-    @Override
-    public Integer checkPath(Queue<String> path) throws NoRouteException
+    public Integer checkPath(Path path) throws NoRouteException
     {
         return network.checkPath(path);
     }
 
     @Override
-    public Integer checkPath(String... stationNames) throws NoRouteException
+    public Integer checkPath(String pathString) throws NoRouteException
     {
-        return checkPath(new LinkedList<String>(Arrays.asList(stationNames)));
+        return checkPath(Path.parseString(pathString));
+    }
+
+    @Override
+    public List<Route> getAllRoutes(String source, String destination, Integer minStops, Integer maxStops)
+    {
+        return new ArrayList<Route>();
     }
 }

@@ -15,14 +15,14 @@ public class StationNode
         this.routes = new HashMap<String, Pair<StationNode, Integer>>();
     }
 
-    void addRoute(StationNode destinationStation, Integer distance)
+    void addRoute(StationNode destinationNode, Integer distance)
     {
-        routes.put(destinationStation.getName(), new Pair<StationNode, Integer>(destinationStation, distance));
+        routes.put(destinationNode.getName(), new Pair<StationNode, Integer>(destinationNode, distance));
     }
 
-    Pair<StationNode, Integer> checkRoute(String stationName)
+    Pair<StationNode, Integer> checkRoute(String station)
     {
-        return routes.get(stationName);
+        return routes.get(station);
     }
 
     String getName()
