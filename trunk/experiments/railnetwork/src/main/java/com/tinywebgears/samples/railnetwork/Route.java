@@ -5,7 +5,7 @@ package com.tinywebgears.samples.railnetwork;
  */
 class Route
 {
-    private final Integer length;
+    private final Integer numberOfStops;
     private final Integer totalDistance;
     private final Path path;
 
@@ -14,20 +14,20 @@ class Route
         assert startingStation != null;
         path = new Path().addStation(startingStation);
         totalDistance = 0;
-        length = 0;
+        numberOfStops = 0;
     }
 
-    private Route(Path path, Integer length, Integer totalDistance)
+    private Route(Path path, Integer numberOfStops, Integer totalDistance)
     {
         this.path = path;
-        this.length = length;
+        this.numberOfStops = numberOfStops;
         this.totalDistance = totalDistance;
     }
 
     Route addStation(String station, Integer distance)
     {
         Path newPath = path.addStation(station);
-        return new Route(newPath, length + 1, totalDistance + distance);
+        return new Route(newPath, numberOfStops + 1, totalDistance + distance);
     }
 
     Path getPath()
@@ -35,9 +35,29 @@ class Route
         return path;
     }
 
-    Integer getLength()
+    Integer getNumberOfStops()
     {
-        return length;
+        return numberOfStops;
+    }
+
+    Integer getTotalDistance()
+    {
+        return totalDistance;
+    }
+
+    String getSource()
+    {
+        return path.getSource();
+    }
+
+    String getDestination()
+    {
+        return path.getDestination();
+    }
+
+    boolean passesThisStation(String station)
+    {
+        return path.passesThisStation(station);
     }
 
     // TODO: equals() and hashCode()
@@ -45,6 +65,6 @@ class Route
     @Override
     public String toString()
     {
-        return path.toString() + ":" + length + ":" + totalDistance;
+        return path.toString() + " [" + totalDistance + "]";
     }
 }

@@ -8,14 +8,14 @@ import java.util.Queue;
  */
 class Path
 {
-    private final Queue<String> stations;
+    private final LinkedList<String> stations;
 
     Path()
     {
         stations = new LinkedList<String>();
     }
 
-    private Path(Queue<String> stations)
+    private Path(LinkedList<String> stations)
     {
         this.stations = stations;
     }
@@ -31,17 +31,43 @@ class Path
 
     Path addStation(String station)
     {
-        Queue<String> newStations = new LinkedList<String>();
+        LinkedList<String> newStations = new LinkedList<String>();
         newStations.addAll(stations);
         newStations.offer(station);
         return new Path(newStations);
     }
 
-    public Queue<String> getStations()
+    Queue<String> getStations()
     {
         Queue<String> copy = new LinkedList<String>();
         copy.addAll(stations);
         return copy;
+    }
+
+    String getSource()
+    {
+        return stations.getFirst();
+    }
+
+    String getDestination()
+    {
+        return stations.getLast();
+    }
+
+    boolean passesThisStation(String testStation)
+    {
+        boolean first = true;
+        for (String station : stations)
+        {
+            if (first)
+            {
+                first = false;
+                continue;
+            }
+            if (station.equals(testStation))
+                return true;
+        }
+        return false;
     }
 
     // TODO: equals() and hashCode()
