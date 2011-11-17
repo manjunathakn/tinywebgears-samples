@@ -9,4 +9,6 @@ public interface NetworkPlanner
     StationNode getStation(String stationName);
 
     Integer checkPath(Queue<String> path) throws NoRouteException;
+
+    Integer checkPath(String... path) throws NoRouteException;
 }

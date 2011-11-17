@@ -1,5 +1,7 @@
 package com.tinywebgears.samples.railnetwork;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import org.slf4j.Logger;
@@ -59,5 +61,11 @@ public class NetworkPlannerImpl implements NetworkPlanner
     public Integer checkPath(Queue<String> path) throws NoRouteException
     {
         return network.checkPath(path);
+    }
+
+    @Override
+    public Integer checkPath(String... stationNames) throws NoRouteException
+    {
+        return checkPath(new LinkedList<String>(Arrays.asList(stationNames)));
     }
 }
