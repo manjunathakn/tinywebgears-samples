@@ -1,33 +1,31 @@
 package com.tinywebgears.samples.railnetwork;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 class Route
 {
     private Integer totalDistance;
-    private List<StationNode> stations;
+    private List<StationNode> stationNodes;
 
-    Route(StationNode sourceStation)
+    Route(StationNode sourceNode)
     {
-        stations = new ArrayList<StationNode>();
-        stations.add(sourceStation);
+        stationNodes = new ArrayList<StationNode>();
+        stationNodes.add(sourceNode);
         totalDistance = 0;
     }
 
-    void addStation(StationNode nextStation, Integer distance)
+    void addStationNode(StationNode nextNode, Integer distance)
     {
-        stations.add(nextStation);
+        stationNodes.add(nextNode);
         totalDistance += distance;
     }
 
-    Queue<String> getPath()
+    Path getPath()
     {
-        Queue<String> path = new LinkedList<String>();
-        for (StationNode station : stations)
-            path.offer(station.getName());
+        Path path = new Path();
+        for (StationNode stationNode : stationNodes)
+            path.addStation(stationNode.getName());
         return path;
     }
 
@@ -35,8 +33,8 @@ class Route
     public String toString()
     {
         StringBuilder path = new StringBuilder();
-        for (StationNode station : stations)
-            path.append(station.getName()).append("-");
+        for (StationNode stationNode : stationNodes)
+            path.append(stationNode.getName()).append("-");
         path.append(totalDistance);
         return path.toString();
     }

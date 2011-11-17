@@ -11,61 +11,64 @@ public class TrainNetworkImpl implements TrainNetwork
 {
     private final Logger logger = LoggerFactory.getLogger(TrainNetworkImpl.class);
 
-    private Map<String, StationNode> stations;
+    private Map<String, StationNode> stationNodes;
 
     public TrainNetworkImpl()
     {
-        stations = new HashMap<String, StationNode>();
+        stationNodes = new HashMap<String, StationNode>();
     }
 
-    private StationNode getOrCreateStation(String stationName, Boolean create)
+    private StationNode getOrCreateStation(String station, Boolean create)
     {
-        StationNode station = stations.get(stationName);
-        if (station != null)
-            return station;
+        StationNode stationNode = stationNodes.get(station);
+        if (stationNode != null)
+            return stationNode;
         if (!create)
             return null;
-        station = new StationNode(stationName);
-        stations.put(stationName, station);
-        return station;
+        stationNode = new StationNode(station);
+        stationNodes.put(station, stationNode);
+        return stationNode;
     }
 
     @Override
-    public StationNode getStation(String stationName)
+    public StationNode getStation(String station)
     {
-        return getOrCreateStation(stationName, false);
+        return getOrCreateStation(station, false);
     }
 
     @Override
     public void addRout(String source, String destination, Integer distance)
     {
-        StationNode sourceStation = getOrCreateStation(source, true);
-        StationNode destinationStation = getOrCreateStation(destination, true);
-        sourceStation.addRoute(destinationStation, distance);
+        StationNode sourceNode = getOrCreateStation(source, true);
+        StationNode destinationNode = getOrCreateStation(destination, true);
+        sourceNode.addRoute(destinationNode, distance);
     }
 
     @Override
-    public Integer checkPath(Queue<String> path) throws NoRouteException
+    public Integer checkPath(Path path) throws NoRouteException
     {
         logger.debug("checkPath: " + path);
-        String stationName = path.poll();
-        StationNode station = stations.get(stationName);
+        if (path == null)
+            throw new IllegalArgumentException("Path cannot be null.");
+        Queue<String> stationsQueue = path.getStations();
+        String station = stationsQueue.poll();
+        StationNode stationNode = stationNodes.get(station);
         Integer totalDistance = 0;
-        totalDistance += checkDistance(station, path);
+        totalDistance += checkDistance(stationNode, stationsQueue);
         return totalDistance;
     }
 
-    private Integer checkDistance(StationNode station, Queue<String> path) throws NoRouteException
+    private Integer checkDistance(StationNode stationNode, Queue<String> stationsQueue) throws NoRouteException
     {
-        String destinationStationName = path.poll();
-        if (destinationStationName == null)
+        String destination = stationsQueue.poll();
+        if (destination == null)
             return 0;
-        Pair<StationNode, Integer> next = station.checkRoute(destinationStationName);
+        Pair<StationNode, Integer> next = stationNode.checkRoute(destination);
         if (next == null)
         {
             logger.info("NO SUCH ROUTE");
-            throw new NoRouteException("No route from " + station + " to " + destinationStationName);
+            throw new NoRouteException("No route from " + stationNode + " to " + destination);
         }
-        return checkDistance(next.getFist(), path) + next.getSecond();
+        return checkDistance(next.getFist(), stationsQueue) + next.getSecond();
     }
 }
