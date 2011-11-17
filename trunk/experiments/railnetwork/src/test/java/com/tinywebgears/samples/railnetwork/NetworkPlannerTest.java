@@ -36,7 +36,7 @@ public class NetworkPlannerTest
         Route route = planner.checkPath("A-B-C");
         Assert.assertNotNull(route);
         Assert.assertEquals(Integer.valueOf(9), route.getTotalDistance());
-        logger.info("Test 1 - " + route);
+        logger.info("Output #1: " + route.getTotalDistance());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class NetworkPlannerTest
         Route route = planner.checkPath("A-D");
         Assert.assertNotNull(route);
         Assert.assertEquals(Integer.valueOf(5), route.getTotalDistance());
-        logger.info("Test 2 - " + route);
+        logger.info("Output #2: " + route.getTotalDistance());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class NetworkPlannerTest
         Route route = planner.checkPath("A-D-C");
         Assert.assertNotNull(route);
         Assert.assertEquals(Integer.valueOf(13), route.getTotalDistance());
-        logger.info("Test 3 - " + route);
+        logger.info("Output #3: " + route.getTotalDistance());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class NetworkPlannerTest
         Route route = planner.checkPath("A-E-B-C-D");
         Assert.assertNotNull(route);
         Assert.assertEquals(Integer.valueOf(22), route.getTotalDistance());
-        logger.info("Test 4 - " + route);
+        logger.info("Output #4: " + route.getTotalDistance());
     }
 
     @Test(expected = NoRouteException.class)
@@ -75,7 +75,7 @@ public class NetworkPlannerTest
         }
         catch (NoRouteException e)
         {
-            logger.info("Test 5 - NO SUCH ROUTE");
+            logger.info("Output #5: NO SUCH ROUTE");
             throw e;
         }
         Assert.assertTrue(false);
@@ -87,11 +87,11 @@ public class NetworkPlannerTest
         Set<Route> allRoutes = planner.getAllRoutes("C", "C", 1, 3);
         Assert.assertEquals(Integer.valueOf(2), Integer.valueOf(allRoutes.size()));
         Set<String> expectedRoutes = new HashSet<String>(Arrays.asList("C-D-C", "C-E-B-C"));
-        logger.info("Test 6 - Routes Found: " + allRoutes.size());
+        logger.info("Output #6: " + allRoutes.size());
         for (Route route : allRoutes)
         {
             Assert.assertTrue(expectedRoutes.contains(route.getPath().toString()));
-            logger.debug("Test 6 - Route Found: " + route);
+            logger.debug("Output #6: " + route);
         }
     }
 
@@ -101,11 +101,11 @@ public class NetworkPlannerTest
         Set<Route> allRoutes = planner.getAllRoutes("A", "C", 4, 4);
         Assert.assertEquals(Integer.valueOf(3), Integer.valueOf(allRoutes.size()));
         Set<String> expectedRoutes = new HashSet<String>(Arrays.asList("A-B-C-D-C", "A-D-C-D-C", "A-D-E-B-C"));
-        logger.info("Test 7 - Routes Found: " + allRoutes.size());
+        logger.info("Output #7: " + allRoutes.size());
         for (Route route : allRoutes)
         {
             Assert.assertTrue(expectedRoutes.contains(route.getPath().toString()));
-            logger.debug("Test 7 - Route Found: " + route);
+            logger.debug("Output #7: " + route);
         }
     }
 
@@ -114,7 +114,7 @@ public class NetworkPlannerTest
     {
         Route route = planner.getShortestRoute("A", "C");
         Assert.assertEquals(Integer.valueOf(9), route.getTotalDistance());
-        logger.info("Test 8 - Shortest Route's Length: " + route.getTotalDistance());
+        logger.info("Output #8: " + route.getTotalDistance());
     }
 
     @Test
@@ -122,15 +122,15 @@ public class NetworkPlannerTest
     {
         Route route = planner.getShortestRoute("B", "B");
         Assert.assertEquals(Integer.valueOf(9), route.getTotalDistance());
-        logger.info("Test 9 - Shortest Route's Length: " + route.getTotalDistance());
+        logger.info("Output #9: " + route.getTotalDistance());
     }
 
     @Test
     public void testGetRoutesMaxDistance_No9() throws NoRouteException
     {
         Set<Route> allRoutes = planner.getAllRoutes("C", "C", 30);
-        logger.info("Test 10 - Routes Found: " + allRoutes.size());
+        logger.info("Output #10: " + allRoutes.size());
         for (Route route : allRoutes)
-            logger.debug("Test 10 - Route Found: " + route);
+            logger.debug("Output #10: " + route);
     }
 }
