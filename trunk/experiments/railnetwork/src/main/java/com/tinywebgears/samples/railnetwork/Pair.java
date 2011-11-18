@@ -1,6 +1,6 @@
-package com.tinywebgears.samples.railnetwork.data;
+package com.tinywebgears.samples.railnetwork;
 
-public class Pair<F, S>
+class Pair<F, S>
 {
     private final F fist;
     private final S second;
