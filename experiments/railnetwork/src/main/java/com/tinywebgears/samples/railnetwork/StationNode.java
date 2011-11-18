@@ -3,7 +3,6 @@ package com.tinywebgears.samples.railnetwork;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tinywebgears.samples.railnetwork.data.Pair;
 
 class StationNode
 {

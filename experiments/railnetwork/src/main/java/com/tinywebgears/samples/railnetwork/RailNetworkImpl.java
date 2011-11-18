@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tinywebgears.samples.railnetwork.data.NoRouteException;
-import com.tinywebgears.samples.railnetwork.data.Pair;
 import com.tinywebgears.samples.railnetwork.data.Path;
 import com.tinywebgears.samples.railnetwork.data.Route;
 
