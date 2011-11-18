@@ -1,15 +1,15 @@
-package com.tinywebgears.samples.railnetwork;
+package com.tinywebgears.samples.railnetwork.data;
 
-/*
+/**
  * Immutable object representing a train route, containing the path and total distance.
  */
-class Route
+public class Route
 {
     private final Integer numberOfStops;
     private final Integer totalDistance;
     private final Path path;
 
-    Route(String startingStation)
+    public Route(String startingStation)
     {
         assert startingStation != null;
         path = new Path().addStation(startingStation);
@@ -24,38 +24,38 @@ class Route
         this.totalDistance = totalDistance;
     }
 
-    Route addStation(String station, Integer distance)
+    public Route addStation(String station, Integer distance)
     {
         Path newPath = path.addStation(station);
         return new Route(newPath, numberOfStops + 1, totalDistance + distance);
     }
 
-    Path getPath()
+    public Path getPath()
     {
         return path;
     }
 
-    Integer getNumberOfStops()
+    public Integer getNumberOfStops()
     {
         return numberOfStops;
     }
 
-    Integer getTotalDistance()
+    public Integer getTotalDistance()
     {
         return totalDistance;
     }
 
-    String getSource()
+    public String getSource()
     {
         return path.getSource();
     }
 
-    String getDestination()
+    public String getDestination()
     {
         return path.getDestination();
     }
 
-    boolean passesThisStation(String station)
+    public boolean passesThisStation(String station)
     {
         return path.passesThisStation(station);
     }

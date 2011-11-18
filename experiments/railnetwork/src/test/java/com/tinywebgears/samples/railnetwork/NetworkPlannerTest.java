@@ -11,9 +11,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tinywebgears.samples.railnetwork.data.NoRouteException;
+import com.tinywebgears.samples.railnetwork.data.Route;
+
 public class NetworkPlannerTest
 {
-    private final static String testString = "AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
+    private final static String TEST_GRAPH = "AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
     private static NetworkPlanner planner;
 
     private final Logger logger = LoggerFactory.getLogger(NetworkPlannerTest.class);
@@ -21,7 +24,7 @@ public class NetworkPlannerTest
     @BeforeClass
     public static void oneTimeSetUp()
     {
-        planner = new NetworkPlannerImpl(testString);
+        planner = new NetworkPlannerImpl(TEST_GRAPH);
     }
 
     @Test

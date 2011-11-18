@@ -5,16 +5,26 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tinywebgears.samples.railnetwork.data.NoRouteException;
+import com.tinywebgears.samples.railnetwork.data.Path;
+import com.tinywebgears.samples.railnetwork.data.Route;
+
+/**
+ * NetworkPlannerImpl is an implementation of {@link com.tinywebgears.samples.railnetwork.NetworkPlanner} interface.
+ * Please see the JavaDoc of the interface for more information.
+ * 
+ * @see com.tinywebgears.samples.railnetwork.NetworkPlanner
+ */
 public class NetworkPlannerImpl implements NetworkPlanner
 {
     private final Logger logger = LoggerFactory.getLogger(NetworkPlannerImpl.class);
 
     private boolean initialized = false;
-    private final TrainNetworkImpl network;
+    private final RailNetworkImpl network;
 
     public NetworkPlannerImpl(String inputGraph)
     {
-        network = new TrainNetworkImpl();
+        network = new RailNetworkImpl();
         initializeNetwork(inputGraph);
         logger.debug("TrainPlanner initialized.");
         initialized = true;
@@ -69,9 +79,9 @@ public class NetworkPlannerImpl implements NetworkPlanner
     }
 
     @Override
-    public Set<Route> getAllRoutes(String source, String destination, Integer maxDistance)
+    public Set<Route> getAllRoutes(String source, String destination, Integer distanceThreshold)
     {
-        return network.getAllRoutes(source, destination, maxDistance);
+        return network.getAllRoutes(source, destination, distanceThreshold);
     }
 
     @Override

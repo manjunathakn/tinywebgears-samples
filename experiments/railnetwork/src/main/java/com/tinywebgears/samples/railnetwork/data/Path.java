@@ -1,16 +1,16 @@
-package com.tinywebgears.samples.railnetwork;
+package com.tinywebgears.samples.railnetwork.data;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-/*
+/**
  * Immutable object representing a path amongst stations.
  */
-class Path
+public class Path
 {
     private final LinkedList<String> stations;
 
-    Path()
+    public Path()
     {
         stations = new LinkedList<String>();
     }
@@ -29,7 +29,7 @@ class Path
         return path;
     }
 
-    Path addStation(String station)
+    public Path addStation(String station)
     {
         LinkedList<String> newStations = new LinkedList<String>();
         newStations.addAll(stations);
@@ -37,19 +37,19 @@ class Path
         return new Path(newStations);
     }
 
-    Queue<String> getStations()
+    public Queue<String> getStations()
     {
         Queue<String> copy = new LinkedList<String>();
         copy.addAll(stations);
         return copy;
     }
 
-    String getSource()
+    public String getSource()
     {
         return stations.getFirst();
     }
 
-    String getDestination()
+    public String getDestination()
     {
         return stations.getLast();
     }
