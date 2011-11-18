@@ -3,7 +3,9 @@ package com.tinywebgears.samples.railnetwork;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StationNode
+import com.tinywebgears.samples.railnetwork.data.Pair;
+
+class StationNode
 {
     private final String name;
     private final Map<String, Pair<StationNode, Integer>> nextStations;
