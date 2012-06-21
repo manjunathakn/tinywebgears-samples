@@ -65,6 +65,8 @@
 		</table>
 	</form>
 
+    <p>Valid credentials are: user/user and admin/admin.</p>
+
 </body>
 
 </html>
