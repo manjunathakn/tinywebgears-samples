@@ -7,7 +7,7 @@
       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
       ">
 
-	<sec:http auto-config="false" entry-point-ref="authenticationEntryPoint">
+	<sec:http auto-config="false" entry-point-ref="authenticationEntryPoint" disable-url-rewriting="true">
 		<sec:custom-filter position="REMEMBER_ME_FILTER"
 			ref="rememberMeFilter" />
 		<sec:custom-filter position="FORM_LOGIN_FILTER"
