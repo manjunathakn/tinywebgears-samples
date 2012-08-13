@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tinywebgears.gmailoauth.mail.LocalEmailService;
 import com.tinywebgears.gmailoauth.mail.LocalEmailService.EmailTaskCallback;
@@ -21,7 +20,6 @@ public class MainActivity extends Activity
 
     private static MainActivity instance;
     private SharedPreferences prefs;
-    private TextView targetEmailLabel;
     private EditText targetEmail;
     private TextView oauthResult;
     private EditText oauthEmail;
@@ -40,7 +38,6 @@ public class MainActivity extends Activity
         instance = this;
         prefs = UserData.getPrefs(this);
         setContentView(R.layout.main);
-        targetEmailLabel = (TextView) findViewById(R.id.emaillabel);
         targetEmail = (EditText) MainActivity.this.findViewById(R.id.emailtextbox);
         oauthResult = (TextView) findViewById(R.id.oauthresult);
         oauthEmail = (EditText) findViewById(R.id.oauthemailtextbox);
@@ -103,15 +100,9 @@ public class MainActivity extends Activity
 
         String emailAddress = prefs.getString(UserData.PREF_KEY_TARGET_EMAIL_ADDRESS, null);
         if (emailAddress != null && emailAddress.length() > 0)
-        {
-            targetEmailLabel.setText(R.string.email_set_up);
             targetEmail.setText(emailAddress);
-        }
         else
-        {
-            targetEmailLabel.setText(R.string.email_not_set_up);
             targetEmail.setText(null);
-        }
     }
 
     @Override
@@ -156,10 +147,7 @@ public class MainActivity extends Activity
             @Override
             public void emailTaskDone(Boolean result, String errorMessage)
             {
-                if (result)
-                    Toast.makeText(getApplicationContext(), "Email successfully sent!", Toast.LENGTH_LONG);
-                else
-                    Toast.makeText(getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG);
+                Log.i(TAG, "Email test result: " + result + " error message: " + errorMessage);
             }
         });
     }

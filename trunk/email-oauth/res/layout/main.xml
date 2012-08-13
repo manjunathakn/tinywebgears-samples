@@ -9,12 +9,6 @@
 	    android:layout_height="10dp" >
 	</LinearLayout>
     
-    <TextView
-        android:id="@+id/emaillabel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp" />
-
     <EditText
         android:id="@+id/emailtextbox"
         android:layout_width="match_parent"
