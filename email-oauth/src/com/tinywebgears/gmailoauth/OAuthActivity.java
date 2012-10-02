@@ -1,13 +1,14 @@
 package com.tinywebgears.gmailoauth;
 
+import org.json.JSONException;
 import org.json.JSONObject;
-import org.scribe.exceptions.OAuthException;
 import org.scribe.model.Token;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,8 +58,6 @@ public class OAuthActivity extends Activity
         Log.d(TAG, "OAuthActivity.onNewIntent");
         super.onNewIntent(intent);
 
-        setContentView(R.layout.oauth_result);
-        oauthStatusLabel = (TextView) findViewById(R.id.authstatus);
         final Button returnMain = (Button) this.findViewById(R.id.returnmain);
         returnMain.setOnClickListener(new View.OnClickListener()
         {
@@ -74,54 +73,12 @@ public class OAuthActivity extends Activity
             if (OAuthBuilder.get().extractVerifier(uri) != null)
             {
                 Log.i(TAG, "Retrieving access token from url: " + uri);
-                try
-                {
-                    getAccessToken(uri);
-                    oauthStatusLabel.setText(R.string.oauth_success);
-                }
-                catch (OAuthException e)
-                {
-                    oauthStatusLabel.setText(R.string.oauth_error);
-                    Log.e(TAG, "Unable to get an OAuth access token: " + e, e);
-                }
+                GetAccessTokenTask getAccessTokenTask = new GetAccessTokenTask();
+                getAccessTokenTask.execute(uri);
             }
             else
                 oauthStatusLabel.setText(R.string.oauth_error);
         }
-    }
-
-    private void getAccessToken(String uri) throws OAuthException
-    {
-        String verifier = OAuthBuilder.get().extractVerifier(uri);
-        Token accessToken = OAuthBuilder.get().getAccessToken(verifier);
-        Log.d(TAG, "Access token: " + accessToken);
-        final Editor edit = prefs.edit();
-        edit.putString(UserData.PREF_KEY_OAUTH_ACCESS_TOKEN, accessToken.getToken());
-        edit.putString(UserData.PREF_KEY_OAUTH_ACCESS_TOKEN_SECRET, accessToken.getSecret());
-        edit.commit();
-
-        String emailAddress = findEmailAddress();
-        Log.d(TAG, "Email: " + emailAddress);
-        edit.putString(UserData.PREF_KEY_OAUTH_EMAIL_ADDRESS, emailAddress);
-        edit.commit();
-    }
-
-    private String findEmailAddress()
-    {
-        try
-        {
-            String jsonOutput = OAuthBuilder.get().makeSecuredRequest(UserData.getAccessToken(),
-                    OAuthHelper.URL_GET_EMAIL);
-            JSONObject jsonResponse = new JSONObject(jsonOutput);
-            String email = jsonResponse.getString("email");
-            Log.i(TAG, "Email address found: " + email);
-            return email;
-        }
-        catch (Exception e)
-        {
-            Log.e(TAG, "Error fining email address: " + e, e);
-        }
-        return null;
     }
 
     @Override
@@ -140,6 +97,9 @@ public class OAuthActivity extends Activity
 
     private void handleOAuthGoogleButton()
     {
+        setContentView(R.layout.oauth_result);
+        oauthStatusLabel = (TextView) findViewById(R.id.authstatus);
+        oauthStatusLabel.setText(R.string.please_wait);
         startActivity(new Intent().setClass(getApplicationContext(), GoogleOAuthActivity.class));
     }
 
@@ -151,5 +111,73 @@ public class OAuthActivity extends Activity
     private void returnToMainPage()
     {
         startActivity(new Intent().setClass(getApplicationContext(), MainActivity.class));
+    }
+
+    private class GetAccessTokenTask extends AsyncTask<String, Void, Boolean>
+    {
+        private String findEmailAddress() throws Exception
+        {
+            try
+            {
+                String jsonOutput = OAuthBuilder.get().makeSecuredRequest(UserData.getAccessToken(),
+                        OAuthHelper.URL_GET_EMAIL);
+                JSONObject jsonResponse = new JSONObject(jsonOutput);
+                String email = jsonResponse.getString("email");
+                Log.i(TAG, "Email address found: " + email);
+                return email;
+            }
+            catch (JSONException e)
+            {
+                throw new Exception("Invalid response to user details API: " + e.getMessage(), e);
+            }
+        }
+
+        private void getAccessToken(String uri) throws Exception
+        {
+            String verifier = OAuthBuilder.get().extractVerifier(uri);
+            Token accessToken = OAuthBuilder.get().getAccessToken(verifier);
+            Log.d(TAG, "Access token: " + accessToken);
+            final Editor edit = prefs.edit();
+            edit.putString(UserData.PREF_KEY_OAUTH_ACCESS_TOKEN, accessToken.getToken());
+            edit.putString(UserData.PREF_KEY_OAUTH_ACCESS_TOKEN_SECRET, accessToken.getSecret());
+            edit.commit();
+
+            String emailAddress = findEmailAddress();
+            Log.d(TAG, "Email: " + emailAddress);
+            edit.putString(UserData.PREF_KEY_OAUTH_EMAIL_ADDRESS, emailAddress);
+            edit.commit();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params)
+        {
+            Log.i(TAG, "Getting access token: " + params);
+            if (params.length < 1)
+            {
+                Log.wtf(TAG, "Insufficient parameters: " + params);
+                return false;
+            }
+            String url = params[0];
+            try
+            {
+                getAccessToken(url);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.e(TAG, "Unable to get an OAuth access token: " + e, e);
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+            Log.i(TAG, "Access token retrieval result: " + result);
+            if (result)
+                oauthStatusLabel.setText(R.string.oauth_success);
+            else
+                oauthStatusLabel.setText(R.string.oauth_error);
+        }
     }
 }

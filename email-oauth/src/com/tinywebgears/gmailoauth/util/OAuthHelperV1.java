@@ -44,42 +44,77 @@ public class OAuthHelperV1 implements OAuthHelper
     @Override
     public String getAuthorizationUrl()
     {
-        requestToken = service.getRequestToken();
-        return URL_OAUTH_AUTHORIZE + requestToken.getToken();
+        try
+        {
+            requestToken = service.getRequestToken();
+            return URL_OAUTH_AUTHORIZE + requestToken.getToken();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Exception caught while getting authorization url.", e);
+        }
     }
 
     @Override
     public String extractVerifier(String uri)
     {
-        if (uri.indexOf(OAUTH_PARAM_VERIFIER + "=") != -1)
-            return UriUtil.getParam(uri, OAUTH_PARAM_VERIFIER);
-        return null;
+        try
+        {
+            if (uri.indexOf(OAUTH_PARAM_VERIFIER + "=") != -1)
+                return UriUtil.getParam(uri, OAUTH_PARAM_VERIFIER);
+            throw new RuntimeException("Verifier key not found in the callback url.");
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Exception caught while getting verifier.", e);
+        }
     }
 
     @Override
     public Token getAccessToken(String verifier)
     {
-        Token accessToken = service.getAccessToken(requestToken, new Verifier(verifier));
-        return accessToken;
+        try
+        {
+            Token accessToken = service.getAccessToken(requestToken, new Verifier(verifier));
+            return accessToken;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Exception caught while getting access token.", e);
+        }
     }
 
     @Override
     public String makeSecuredRequest(Token accessToken, String url)
     {
-        OAuthRequest request = new OAuthRequest(Verb.GET, url);
-        service.signRequest(accessToken, request);
-        request.addHeader("GData-Version", "3.0");
-        Response response = request.send();
-        System.out.println("Got it! Lets see what we found...");
-        System.out.println();
-        System.out.println(response.getCode());
-        System.out.println(response.getBody());
-        return response.getBody();
+        try
+        {
+            OAuthRequest request = new OAuthRequest(Verb.GET, url);
+            service.signRequest(accessToken, request);
+            request.addHeader("GData-Version", "3.0");
+            Response response = request.send();
+            System.out.println("Got it! Lets see what we found...");
+            System.out.println();
+            System.out.println(response.getCode());
+            System.out.println(response.getBody());
+            return response.getBody();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Exception caught while making a secure request.", e);
+        }
     }
 
     @Override
     public void signRequest(Token accessToken, OAuthRequest request)
     {
-        service.signRequest(accessToken, request);
+        try
+        {
+            service.signRequest(accessToken, request);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Exception caught while signing request.", e);
+        }
     }
 }
