@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tinywebgears.gmailoauth.mail.LocalEmailService;
 import com.tinywebgears.gmailoauth.mail.LocalEmailService.EmailTaskCallback;
@@ -142,12 +143,14 @@ public class MainActivity extends Activity
     private void handleSendEmailButton()
     {
         saveTargetEmail(targetEmail.getText().toString());
-        LocalEmailService.get().sendEmail("Email OAuth Sample", "This is a sample email!", new EmailTaskCallback()
+        LocalEmailService.get().sendEmail("Email OAuth Sample", "This is a test email!", new EmailTaskCallback()
         {
             @Override
             public void emailTaskDone(Boolean result, String errorMessage)
             {
                 Log.i(TAG, "Email test result: " + result + " error message: " + errorMessage);
+                Toast.makeText(MainActivity.this, "Test email sent to " + targetEmail.getText().toString(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
